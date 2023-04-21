@@ -1,0 +1,209 @@
+:root{
+    --tile1: #a1d149;
+    --tile2: #aad751;
+    --blank1: #d7b899;
+    --blank2: #e5c29f;
+    --border: #87af44;
+}
+td{width:30px;height:30px}
+.one{background-color:var(--tile1)}
+.two{background-color:var(--tile2)}
+.one:hover{background-color:#be5}
+.two:hover{background-color:#cf6}
+.b1{background-color:var(--blank1);width:24px;height:24px}
+.b2{background-color:var(--blank2);width:24px;height:24px}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Bless your soul, young traveler. You do not want to venture farther.*/
+td.one + td.b2{border-left:3px solid var(--border)}
+td.two + td.b1{border-left:3px solid var(--border)}
+td.b2:has(+td.one){border-right:3px solid var(--border)}
+td.b1:has(+td.two){border-right:3px solid var(--border)}
+tr:has(+tr td:nth-child(1).one) td:nth-child(1).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(2).one) td:nth-child(2).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(3).one) td:nth-child(3).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(4).one) td:nth-child(4).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(5).one) td:nth-child(5).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(6).one) td:nth-child(6).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(7).one) td:nth-child(7).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(8).one) td:nth-child(8).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(9).one) td:nth-child(9).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(10).one) td:nth-child(10).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(11).one) td:nth-child(11).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(12).one) td:nth-child(12).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(13).one) td:nth-child(13).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(14).one) td:nth-child(14).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(15).one) td:nth-child(15).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(16).one) td:nth-child(16).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(17).one) td:nth-child(17).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(18).one) td:nth-child(18).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(19).one) td:nth-child(19).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(20).one) td:nth-child(20).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(21).one) td:nth-child(21).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(22).one) td:nth-child(22).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(23).one) td:nth-child(23).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(24).one) td:nth-child(24).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(25).one) td:nth-child(25).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(26).one) td:nth-child(26).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(27).one) td:nth-child(27).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(28).one) td:nth-child(28).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(29).one) td:nth-child(29).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(30).one) td:nth-child(30).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(31).one) td:nth-child(31).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(32).one) td:nth-child(32).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(33).one) td:nth-child(33).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(34).one) td:nth-child(34).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(35).one) td:nth-child(35).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(36).one) td:nth-child(36).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(37).one) td:nth-child(37).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(38).one) td:nth-child(38).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(39).one) td:nth-child(39).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(40).one) td:nth-child(40).b2{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(1).two) td:nth-child(1).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(2).two) td:nth-child(2).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(3).two) td:nth-child(3).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(4).two) td:nth-child(4).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(5).two) td:nth-child(5).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(6).two) td:nth-child(6).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(7).two) td:nth-child(7).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(8).two) td:nth-child(8).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(9).two) td:nth-child(9).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(10).two) td:nth-child(10).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(11).two) td:nth-child(11).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(12).two) td:nth-child(12).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(13).two) td:nth-child(13).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(14).two) td:nth-child(14).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(15).two) td:nth-child(15).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(16).two) td:nth-child(16).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(17).two) td:nth-child(17).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(18).two) td:nth-child(18).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(19).two) td:nth-child(19).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(20).two) td:nth-child(20).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(21).two) td:nth-child(21).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(22).two) td:nth-child(22).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(23).two) td:nth-child(23).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(24).two) td:nth-child(24).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(25).two) td:nth-child(25).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(26).two) td:nth-child(26).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(27).two) td:nth-child(27).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(28).two) td:nth-child(28).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(29).two) td:nth-child(29).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(30).two) td:nth-child(30).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(31).two) td:nth-child(31).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(32).two) td:nth-child(32).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(33).two) td:nth-child(33).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(34).two) td:nth-child(34).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(35).two) td:nth-child(35).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(36).two) td:nth-child(36).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(37).two) td:nth-child(37).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(38).two) td:nth-child(38).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(39).two) td:nth-child(39).b1{border-bottom:3px solid var(--border)}
+tr:has(+tr td:nth-child(40).two) td:nth-child(40).b1{border-bottom:3px solid var(--border)}
+tr:has(td:nth-child(1).one) + tr td:nth-child(1).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(2).one) + tr td:nth-child(2).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(3).one) + tr td:nth-child(3).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(4).one) + tr td:nth-child(4).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(5).one) + tr td:nth-child(5).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(6).one) + tr td:nth-child(6).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(7).one) + tr td:nth-child(7).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(8).one) + tr td:nth-child(8).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(9).one) + tr td:nth-child(9).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(10).one) + tr td:nth-child(10).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(11).one) + tr td:nth-child(11).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(12).one) + tr td:nth-child(12).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(13).one) + tr td:nth-child(13).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(14).one) + tr td:nth-child(14).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(15).one) + tr td:nth-child(15).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(16).one) + tr td:nth-child(16).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(17).one) + tr td:nth-child(17).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(18).one) + tr td:nth-child(18).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(19).one) + tr td:nth-child(19).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(20).one) + tr td:nth-child(20).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(21).one) + tr td:nth-child(21).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(22).one) + tr td:nth-child(22).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(23).one) + tr td:nth-child(23).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(24).one) + tr td:nth-child(24).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(25).one) + tr td:nth-child(25).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(26).one) + tr td:nth-child(26).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(27).one) + tr td:nth-child(27).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(28).one) + tr td:nth-child(28).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(29).one) + tr td:nth-child(29).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(30).one) + tr td:nth-child(30).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(31).one) + tr td:nth-child(31).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(32).one) + tr td:nth-child(32).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(33).one) + tr td:nth-child(33).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(34).one) + tr td:nth-child(34).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(35).one) + tr td:nth-child(35).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(36).one) + tr td:nth-child(36).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(37).one) + tr td:nth-child(37).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(38).one) + tr td:nth-child(38).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(39).one) + tr td:nth-child(39).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(40).one) + tr td:nth-child(40).b2{border-top:3px solid var(--border)}
+tr:has(td:nth-child(1).two) + tr td:nth-child(1).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(2).two) + tr td:nth-child(2).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(3).two) + tr td:nth-child(3).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(4).two) + tr td:nth-child(4).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(5).two) + tr td:nth-child(5).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(6).two) + tr td:nth-child(6).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(7).two) + tr td:nth-child(7).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(8).two) + tr td:nth-child(8).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(9).two) + tr td:nth-child(9).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(10).two) + tr td:nth-child(10).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(11).two) + tr td:nth-child(11).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(12).two) + tr td:nth-child(12).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(13).two) + tr td:nth-child(13).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(14).two) + tr td:nth-child(14).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(15).two) + tr td:nth-child(15).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(16).two) + tr td:nth-child(16).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(17).two) + tr td:nth-child(17).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(18).two) + tr td:nth-child(18).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(19).two) + tr td:nth-child(19).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(20).two) + tr td:nth-child(20).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(21).two) + tr td:nth-child(21).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(22).two) + tr td:nth-child(22).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(23).two) + tr td:nth-child(23).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(24).two) + tr td:nth-child(24).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(25).two) + tr td:nth-child(25).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(26).two) + tr td:nth-child(26).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(27).two) + tr td:nth-child(27).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(28).two) + tr td:nth-child(28).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(29).two) + tr td:nth-child(29).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(30).two) + tr td:nth-child(30).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(31).two) + tr td:nth-child(31).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(32).two) + tr td:nth-child(32).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(33).two) + tr td:nth-child(33).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(34).two) + tr td:nth-child(34).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(35).two) + tr td:nth-child(35).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(36).two) + tr td:nth-child(36).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(37).two) + tr td:nth-child(37).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(38).two) + tr td:nth-child(38).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(39).two) + tr td:nth-child(39).b1{border-top:3px solid var(--border)}
+tr:has(td:nth-child(40).two) + tr td:nth-child(40).b1{border-top:3px solid var(--border)}
