@@ -1,11 +1,13 @@
 var x=28,//Board width (cells)
     y=20,//Board height (cells)
-    bc=(x*y)/5,//Bomb count (recommended density between 1/2.4 and 1/10)
+    bc=112,//Bomb count (recommended density between 1/2.4 and 1/10)
     bombs=[],//initializing to empty
     flags=[],//initializing to empty
     colors = ['#1976d2','#3a8e3d','#d33433','#7b1fa2','#ff9100','darkturquoise','black','gray'];//colors for nums 1-8
-
+var ix=28;iy=20;ib=112;//input values
 var varbs = document.querySelector(":root");//Get CSS variables
+var start = Date.now()
+var started = 0;
 window.addEventListener("resize",rsz,true);//Resize listener
 createBoard();//Start
 
@@ -60,6 +62,7 @@ function rc(c1,c2){
         self.innerHTML = ""
         flags[c1*y+c2] = false
         }
+    document.getElementById("flags").innerHTML = bc-flags.reduce(function(a,b){return a+b},0);
 }//Applies right click (flag) to coordinates
 
 //Mechanics Functions
@@ -92,7 +95,8 @@ function createBoard(){
             }, false);
         }
     }
-    rsz();bombs=[];flags=[];
+    rsz();bombs=[];flags=[];started=0;
+    document.getElementById("flags").innerHTML = bc-flags.reduce(function(a,b){return a+b},0);
 }//Generates table of y rows and x columns in a div of id="minesweeper" or appended to body
 function initialize(a,b){
     b1 = [];
@@ -111,6 +115,8 @@ function initialize(a,b){
     }
     if(!bombs[a*y+b]) lc(a,b);
     if((document.getElementsByClassName("b1").length+document.getElementsByClassName("b2").length)<SpaceReq) {createBoard();bombs=[];lc(a,b)}
+    start = Date.now()
+    started=1
 }//Ran in lc() to ensure game has sufficient starting area
 function bombcheck(a,b){
     c = 0;
@@ -147,6 +153,10 @@ function win(){
     alert('NO WAY YOU WON')
     createBoard()
 }//Win state function
+setInterval(function(){
+    if (started) document.getElementById("timer").innerHTML = Math.floor((Date.now()-start)/1000)
+    else document.getElementById("timer").innerHTML = 0
+},500)
 
 //Display Functions
 function rsz(){
@@ -162,6 +172,7 @@ function rsz(){
     varbs.style.setProperty('--footh',Math.floor(.07*height)+'px')
     varbs.style.setProperty('--umargin',Math.ceil(margin)+'px')
     varbs.style.setProperty('--dmargin',Math.floor(margin)+'px')
+    document.querySelector('.scoreboard').style.setProperty("margin-left",Math.max((width/2-500),25)+"px")
     console.log("Page Resized: "+width+", "+height)
 }//Change CSS size variables based on page and table size
 
@@ -174,4 +185,28 @@ function easyChangeBoard(w,h,d) {
     y = h;
     bc = Math.ceil(w*h*d);
     createBoard();
+}
+
+//Settings Functions
+function change(){
+    oldSize = ix*iy; oldBombs = ib;
+    ix=parseInt(document.getElementById("width").value)
+    iy=parseInt(document.getElementById("height").value)
+    ib=parseInt(document.getElementById("mines").value)
+    document.getElementById("bombleft").innerHTML = Math.ceil(ix*iy*0.1)
+    document.getElementById("bombright").innerHTML = Math.floor(ix*iy*0.4)
+    document.getElementById("mines").setAttribute("min",Math.ceil(ix*iy*0.1)) 
+    document.getElementById("mines").setAttribute("max",Math.floor(ix*iy*0.4)) 
+    if (oldBombs==ib) {ib=Math.floor(ix*iy*oldBombs/oldSize);document.getElementById("mines").value=ib}
+    document.getElementById("wspan").innerHTML = ix
+    document.getElementById("hspan").innerHTML = iy
+    document.getElementById("bspan").innerHTML = ib
+    document.getElementById("dspan").innerHTML = Math.round(ib*100/(ix*iy))/100
+}
+function regenerate(){
+    if(!confirm("Reset the game board with new settings?")) return
+    x = parseInt(document.getElementById("width").value)
+    y = parseInt(document.getElementById("height").value)
+    bc = parseInt(document.getElementById("mines").value)
+    createBoard()
 }

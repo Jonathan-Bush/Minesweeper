@@ -15,11 +15,70 @@
     </head>
     <body>
         <nav>
-            <br>
-            ... hello gamers. if you would like to change the board size:<br>
-            .- open inspect element, then go to the console<br>
-            .- run the command easyChangeBoard(width,height,density)<br>
-            .- width can be between 8 and 40... height between 8 and 24... and density between 0.1 and 0.4 (default density is 0.2, i dont recommend changing it)
+            <table style="width:100%">
+                <tr>
+                    <td class="customization">
+                <div class="farright">
+                    <button onclick="regenerate()" style="width:100%;height:100%;border-radius:10px;font-size:14px;font-weight:bold">
+                        Apply
+                    </button>
+                </div>
+                <div id="widtharea">
+                    <div class="farleft">
+                        <br>Width: <span id="wspan">28</span>
+                    </div>
+                    <div class="left">
+                        <br><span>8</span>
+                    </div>
+                    <div class="sliders"><br>
+                        <input type="range" min="8" max="40" value="28" class="slider" step="1" id="width" onchange="change()"><br>
+                    </div>
+                    <div class="right">
+                    <br>40
+                    </div>
+                </div>
+                <div id="heightarea">
+                    <div class="farleft">
+                        Height: <span id="hspan">20</span>
+                    </div>
+                    <div class="left">
+                        <span>8</span>
+                    </div>
+                    <div class="sliders">
+                        <input type="range" min="8" max="24" value="20" class="slider" step="1" id="height" onchange="change()">
+                    </div>
+                    <div class="right">
+                    24
+                    </div>
+                </div>
+                <div id="bombarea">
+                    <div class="farleft">
+                        Bombs: <span id="bspan">112</span><br>
+                        <span class="dspan"> Density: <span id="dspan">0.2</span> (Rec. 0.2)</span>
+                    </div>
+                    <div class="left">
+                        <span id="bombleft">56</span>
+                    </div>
+                    <div class="sliders">
+                        <input type="range" min="56" max="224" value="112" class="slider" step="1" id="mines" onchange="change()">
+                    </div>
+                    <div class="right">
+                        <span id="bombright">224</span>
+                    </div>
+                </div>
+            </td>
+                    <td class="scoreboard">
+                        <div class="flagbox">
+                            <img class="icon" src="assets/flag.png" width="60px" style="margin-left:10px"><br>
+                            <span id="flags">0</span>
+                        </div>
+                        <div class="timebox">
+                            <img class="icon" src="assets/clock.png" width="60px"><br>
+                            <span id="timer">0</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </nav>
         <div id="minesweeper"></div>
         <footer>
