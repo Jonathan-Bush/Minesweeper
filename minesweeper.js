@@ -172,6 +172,6 @@ function easyChangeBoard(w,h,d) {
     if (d<0.1 || d>0.4) throw new Error('Density must be between 0.1 and 0.4 (default is 0.2)')
     x = w;
     y = h;
-    bc = w*h*d;
+    bc = Math.ceil(w*h*d);
     createBoard();
 }
