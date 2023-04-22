@@ -5,4 +5,5 @@ The game is available [here at https://mine.jonserver.com/](https://mine.jonserv
 
 Version List:
 1. First version has basic board generation, styling and click detection
-2. Current version includes basic game function and website design
+2. Second version includes basic game function and website design
+3. Third version includes winning and board customization function
