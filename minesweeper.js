@@ -159,13 +159,11 @@ function win(){
         elem = document.getElementsByClassName('one')[i]
         if(elem.style===undefined) break;
         elem.style.setProperty("background-color","#5ff0f0")
-        console.log(elem.id)
     }
     for(i in document.getElementsByClassName('two')){
         elem = document.getElementsByClassName('two')[i]
         if(elem.style===undefined) break;
         elem.style.setProperty("background-color","#5fe5e5")
-        console.log(elem.id)
     }
     state = 2
 }//Win state function
@@ -178,19 +176,18 @@ setInterval(function(){
 //Display Functions
 function rsz(){
     height = Math.max(480,$(window).height());//height tolerance
-    width = Math.max(750,$(window).width());//with tolerance
-    cellsize = Math.floor(Math.min(Math.max(30,50*(8/Math.min(x,y))),0.7*width/x,0.75*height/y))
-    margin = (height-(.17*height+y*(cellsize+2)))/2-11
+    width2 = Math.max($(window).width());//width tolerance
+    cellsize = Math.round(Math.min(Math.max(32,52*(8/Math.min(x,y))),.65*(width2+250)/x,.88*(height-150)/y))-2
+    margin = (height-(100+Math.max(Math.floor(.07*height),30)+y*(cellsize+2)))/2-15
     varbs.style.setProperty('--cell',cellsize+'px')
     varbs.style.setProperty('--font',Math.round(cellsize * .7)+'px')
-    varbs.style.setProperty('--borders',border = Math.round(cellsize * .1)+'px')
+    varbs.style.setProperty('--borders',border = Math.floor(cellsize * .1)+'px')
     varbs.style.setProperty('--small',Math.round(cellsize * .8)+'px')
-    varbs.style.setProperty('--navh',Math.floor(.1*height)+'px')
-    varbs.style.setProperty('--footh',Math.floor(.07*height)+'px')
-    varbs.style.setProperty('--umargin',Math.ceil(margin)+'px')
-    varbs.style.setProperty('--dmargin',Math.floor(margin)+'px')
-    varbs.style.setProperty('--navmargin',Math.floor(.01*height)+'px')
-    console.log("Page Resized: "+width+", "+height)
+    varbs.style.setProperty('--footh',Math.max(Math.floor(.07*height),30)+'px')
+    varbs.style.setProperty('--umargin',Math.max(Math.ceil(margin),10)+'px')
+    varbs.style.setProperty('--dmargin',Math.max(Math.floor(margin),10)+'px')
+    varbs.style.setProperty('--bmargin',Math.min(75,($(window).width()/2)-183)+'px')
+    console.log("Page Resized: "+width2+", "+height)
 }//Change CSS size variables based on page and table size
 
 //Admin Functions?
@@ -234,6 +231,6 @@ function forfeit(){
 }//Reset button functionality
 function menu(id){
     var elem = document.getElementById(id)
-    if(elem.style.display == "none"){elem.style.display = "inherit";console.log('Opened '+id);return}
-    if(elem.style.display == "inherit"){elem.style.display = "none";console.log('Closed '+id);return}
+    if(elem.style.display == "none"){elem.style.display = "flex";console.log('Opened '+id);return}
+    if(elem.style.display == "flex"){elem.style.display = "none";console.log('Closed '+id);return}
 }//Open a menu

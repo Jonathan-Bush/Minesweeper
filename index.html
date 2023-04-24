@@ -15,7 +15,19 @@
     </head>
     <body>
         <div id="welcome" class="menuContainer" style="z-index:2;display:none">
-            
+            <div class="menu" style="width:450px;height:370px;position:relative">
+                <div style="width:100%;height:72px;text-align:center;font-size:72px;position:relative;color:var(--bborder)">
+                    <span style="-webkit-text-stroke-width:2px;-webkit-text-stroke-color:black;font-weight:bolder;">Welcome!</span>
+                </div>
+                <div style="width:100%;margin:10px">
+                    Welcome to Jonno's Minesweeper!<br><br>
+                    To play, click a tile on the board. The numbers represent the number of mines in uncleared tiles<br>in the 8 surrounding squares. Mark tiles you believe to have a mine with a flag using right<br>click. Once you uncover all safe tiles, you win!<br><br>
+                    For difficulty, appearance, and control options,<br>click the settings button in the top right.
+                </div>
+                <button class="accept" onclick="menu('welcome')">
+                    Got it!
+                </button>
+            </div>
         </div>
         <div id="settings" class="menuContainer" style="z-index:3;display:none">
             
@@ -24,37 +36,35 @@
             
         </div>
         <nav>
-            <div style="float:left;height:50%;width:22%;margin:calc(var(--navh)*.25);margin-right:0">
-                <button class="hbutton" onclick="menu('welcome')">
+            <div style="float:left;height:50%;width:22%;margin:25px 0 25px calc(var(--bmargin) - 50px);position:relative">
+                <button class="hbutton" onclick="menu('welcome')" style="position:absolute;left:0">
                     <img class="bicon" src="assets/info.png">
                     <span class="popuptext">Info</span>
                 </button>
-                <button class="hbutton" style="margin-left:min(10%,25px)" onclick="forfeit()">
+                <button class="hbutton" onclick="forfeit()" style="position:absolute;left:var(--bmargin)">
                     <img class="bicon" src="assets/reset.png">
                     <span class="popuptext">Forfeit</span>
                 </button>
             </div>
-            <div class="scoreboard">
-                <div class="flagbox" style="height:100%">
-                    <div style="width:55%;height:100%;float:left">
+            <div style="display:inline-block;position:relative">
+                <div class="scoreboard">
+                    <div class="flagbox">
                         <img class="icon" src="assets/flag.png">
+                        <span id="flags">0</span>
                     </div>
-                    <span id="flags">0</span>
-                </div>
-                <div class="timebox" style="height:100%">
-                    <div style="width:55%;height:100%;float:left">
+                    <div class="timebox" style="margin:8px 8px 8px 0;left:108px;text-align:left;">
                         <img class="icon" src="assets/clock.png">
+                        <span id="timer">0</span>
                     </div>
-                    <span id="timer">0</span>
-                </div>
             </div>
-            <div style="float:right;height:50%;width:22%;margin:calc(var(--navh)*.25);margin-left:0">
-                <button class="hbutton" style="float:right" onclick="menu('settings')">
+            </div>
+            <div style="float:right;height:50%;width:22%;margin:25px calc(var(--bmargin) - 50px) 25px 0;position:relative">
+                <button class="hbutton" onclick="menu('settings')" style="position:absolute;right:0">
                     <img class="bicon" src="assets/settings.png">
                     <span class="popuptext">Settings</span>
                 </button>
-                <button class="hbutton" style="margin-right:min(10%,25px);float:right">
-                    <a href="https://github.com/Jonathan-Bush/" target="_blank">
+                <button class="hbutton" style="position:absolute;right:var(--bmargin)">
+                    <a href="https://github.com/Jonnos-Code/" target="_blank">
                         <img class="bicon" src="assets/github.png" style="margin-bottom:1px">
                     </a>
                     <span class="popuptext">My Github</span>

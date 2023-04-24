@@ -12,21 +12,23 @@
     --bborder: #2a602b;
     --navbg: #151a15;
     --sbbg: #4a802c;
+    --button: #5fe5e5;
+    --text: white;
+    --buttontext: black;
     --umargin: 15px;
     --dmargin: 15px;
     --cell: 30px;
     --font: 21px;
     --borders: 3px;
     --small: 24px;
-    --navh: 100px;
     --footh: 70px;
-    --navmargin: 10px;
+    --bmargin: 75px;
 }
 body{width:100%;height:98%;margin:0;padding:0;background-image:url(assets/grassbg.webp);background-size:cover}
-html{width:100%;background-color: var(--navbg);font-family:Helvetica}
+html{width:100%;background-color: var(--navbg);font-family:Helvetica;}
 
-nav{background-color:var(--navbg);width:100%;height:var(--navh);text-align:center}
-footer{background-color:var(--navbg);width:100%;height:var(--footh)}
+nav{background-color:var(--navbg);width:100%;height:100px;text-align:center}
+footer{background-color:var(--navbg);width:100%;height:max(var(--footh),40px)}
 
 /*Minesweeper Stuff*/
 td.one,td.two,td.b1,td.b2{
@@ -54,37 +56,36 @@ tr td.b2:not(:empty):hover{background-color:var(--b2hover)}
 
 /*Navbar Buttons*/
 button{cursor:pointer;}
-.hbutton{float:left;height:100%;width:calc(var(--navh)*.5);
-    border-radius:50%;border:calc(var(--navh)*.03) solid var(--bborder);
+.hbutton{float:left;height:100%;width:50px;
+    border-radius:50%;border:3px solid var(--bborder);
     background-color:var(--sbbg);position:relative;}
-.bicon{position:absolute;top:calc(var(--navh)*.02);left:calc(var(--navh)*.02);width:calc(var(--navh)*.4);height:calc(var(--navh)*.4)}
-.popuptext{background-color:#333;color:#fff;text-align:center;
-    border-radius:6px;padding:8px 0;width:80px;visibility:hidden;
-    position:absolute;z-index:1;top:125%;left:50%;margin-left:-40px}
+.bicon{position:absolute;top:2px;left:2px;width:40px;height:40px}
+.popuptext{background-color:#333;color:var(--text);text-align:center;
+    border-radius:6px;padding:8px 0;width:66px;visibility:hidden;
+    position:absolute;z-index:1;top:125%;left:50%;margin-left:-33px}
 .hbutton:hover .popuptext{visibility:visible;-webkit-animation: fadeIn 0.25s;animation: fadeIn 0.25s}
+.hbutton:hover {filter: brightness(1.6)}
 .popuptext::after{content: "";position:absolute;top:-30%;left:50%;margin-left:-5px;
     border-width:5px;border-style:solid;border-color:transparent transparent #333 transparent}
 @-webkit-keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
 /*Scoreboard*/
-.scoreboard{width:200px;height:60%;
-    display:inline-block;text-align:left;
-    background-color:var(--sbbg);margin:var(--navmargin);
-    border-radius:15px;border: 10px solid var(--bborder);
-    line-height:calc(0.6 * var(--navh))}
-.flagbox{width:50%;float:left}
-.timebox{width:50%;float:right}
-.icon{width:90%;align-self:center;vertical-align:center;margin-top:8%}
-.scoreboard span{font-size:24px;color:white;display:inline-block;vertical-align:middle}
-
+.scoreboard{width:200px;height:60px;
+    position:absolute;left:-108px;top:-4px;text-align:left;line-height:54px;
+    background-color:var(--sbbg);border-radius:16px;border: 8px solid var(--bborder);}
+.flagbox,.timebox{position:absolute;width:100px;float:left;margin:8px 0 8px 8px;height:100%}
+.icon{height:90%;vertical-align:middle;display:inline-block;margin:-12px 0 0 -8px;}
+.scoreboard span{font-size:24px;color:var(--text);display:inline-block;vertical-align:middle;margin:-12px 0 0 -4px}
 
 
 /*Menus*/
-.menuContainer{position:absolute;height:100%;width:100%;background-color:#000b}
+.menuContainer{position:absolute;height:100%;width:100%;background-color:#000c;justify-content:center;align-items:center}
+.menu{background-color:var(--sbbg);border: 12px solid var(--bborder);border-radius:36px;font-size:20px;color:var(--text)}
+.accept{position:absolute;bottom:10px;left:150px;width:150px;height:40px;background-color:var(--button);border-radius:10px;font-size:20px;font-weight:bolder}
 
 /*Settings*/
-.customization{text-align:center;width:400px;font-weight:bold;color:white;font-size:16px;display:inline-block;height:var(--navh)}
+.customization{text-align:center;width:400px;font-weight:bold;color:var(--text);font-size:16px;display:inline-block;height:100px}
 .sliders{display:inline-block;color:green;width:40%}
 .left{width:8%;float:left;text-align:right;margin-right:2%}
 .right{width:8%;float:right;text-align:left;margin-left:2%}
