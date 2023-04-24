@@ -7,17 +7,18 @@ var x=28,//Board width (cells)
 var ix=28;iy=20;ib=112;//input values
 var varbs = document.querySelector(":root");//Get CSS variables
 var start = Date.now()
-var started = 0;
+var started = 0, state=0;
 window.addEventListener("resize",rsz,true);//Resize listener
 createBoard();//Start
 
 //Controls Functions
 function lc(c1,c2){
+    if(state){if(confirm("Start new game?")) createBoard(); return}// Reset Game
     self = document.getElementById("x"+c1+"y"+c2); // Get Element
     if(self.className == "b1"||self.className == "b2") return // Already-Clicked Check
     if(bombs === undefined || bombs.length == 0){initialize(c1,c2); return} // Initialize Check
     if(self.hasChildNodes() && self.firstChild.className=="flag") return // Stop click on flag
-    if(bombs[c1*y+c2]){self.style.backgroundColor = "red";lose(); return} // Click a Bomb Check    
+    if(bombs[c1*y+c2]){self.style.backgroundColor = "red";alert('L you lost lol');lose(); return} // Click a Bomb Check    
     self.className = (self.className == 'one' ? 'b1' : 'b2') // Apply Click
     count = bombcheck(c1,c2)
     if(count==0){ // Clear nearby tiles if blank
@@ -37,20 +38,22 @@ function lc(c1,c2){
     if((document.getElementsByClassName("one").length+document.getElementsByClassName("two").length)==bc) win();
 }//Applies left click (clear) to coordinates, includes most logic
 function mc(c1,c2){
+    if(state) return
     self = document.getElementById("x"+c1+"y"+c2); // Get Element
     if(self.className == "one"||self.className == "two") return // Must clear blanks
     if(self.innerHTML && flagcheck(c1,c2) == bombcheck(c1,c2)){ //Allow on numbered tiles with equal numbers flags and bombs
-        if(c1+1<x) lc(c1+1,c2)
-        if(c2+1<y) lc(c1,c2+1)
-        if(c1 > 0) lc(c1-1,c2)
-        if(c2 > 0) lc(c1,c2-1)
-        if(c1+1<x && c2+1<y) lc(c1+1,c2+1)
-        if(c1+1<x && c2 > 0) lc(c1+1,c2-1)
-        if(c1 > 0 && c2+1<y) lc(c1-1,c2+1)
-        if(c1 > 0 && c2 > 0) lc(c1-1,c2-1)
+        if(c1+1<x && !state) lc(c1+1,c2)
+        if(c2+1<y && !state) lc(c1,c2+1)
+        if(c1 > 0 && !state) lc(c1-1,c2)
+        if(c2 > 0 && !state) lc(c1,c2-1)
+        if(c1+1<x && c2+1<y && !state) lc(c1+1,c2+1)
+        if(c1+1<x && c2 > 0 && !state) lc(c1+1,c2-1)
+        if(c1 > 0 && c2+1<y && !state) lc(c1-1,c2+1)
+        if(c1 > 0 && c2 > 0 && !state) lc(c1-1,c2-1)
     }
 }//Applies middle click (chord) to coordinates
 function rc(c1,c2){
+    if(state) return
     self = document.getElementById("x"+c1+"y"+c2); // Get Element
     if(self.className == "b1"||self.className == "b2") return // Can't flag blanks
     if(bombs === undefined || bombs.length == 0) return // Can't flag while pre-initialized
@@ -95,7 +98,7 @@ function createBoard(){
             }, false);
         }
     }
-    rsz();bombs=[];flags=[];started=0;
+    rsz();bombs=[];flags=[];started=0;state=0;
     document.getElementById("flags").innerHTML = bc-flags.reduce(function(a,b){return a+b},0);
 }//Generates table of y rows and x columns in a div of id="minesweeper" or appended to body
 function initialize(a,b){
@@ -107,6 +110,7 @@ function initialize(a,b){
     console.log('Space Requirement: '+SpaceReq)
     while(b1.length < bc){
         var rand = Math.floor(Math.random()*x*y);
+        if(Math.abs(Math.floor(rand/y)-a)<=1 && Math.abs(rand%y<=1)) continue
         if(b1.indexOf(rand) === -1) b1.push(rand);
     }
     for(i=0;i<x*y;i++){
@@ -143,27 +147,40 @@ function flagcheck(a,b){
     return c; 
 }//Returns number of flags around coords (a,b)
 function lose(){
-    alert('L you lost lol')
     for(i in bombs){//view bombs
-        if(bombs[i] === true) document.getElementById("x"+Math.floor(i/y)+"y"+i%y).innerHTML = "<img class=\"mine\" valign=\"middle\" align=\"center\" src=\"assets/mine.png\"></img>";
+        if(bombs[i] && !flags[i]) document.getElementById("x"+Math.floor(i/y)+"y"+i%y).innerHTML = "<img class=\"mine\" valign=\"middle\" align=\"center\" src=\"assets/mine.png\"></img>";
+        if(flags[i] && !bombs[i]) document.getElementById("x"+Math.floor(i/y)+"y"+i%y).innerHTML = "<img class=\"mine\" valign=\"middle\" align=\"center\" src=\"assets/xflag.png\"></img>";
     }
-    createBoard()
+    state = 1
 }//Loss state function
 function win(){
-    alert('NO WAY YOU WON')
-    createBoard()
+        alert('NO WAY YOU WON');
+    for(i in document.getElementsByClassName('one')){
+        elem = document.getElementsByClassName('one')[i]
+        if(elem.style===undefined) break;
+        elem.style.setProperty("background-color","#5ff0f0")
+        console.log(elem.id)
+    }
+    for(i in document.getElementsByClassName('two')){
+        elem = document.getElementsByClassName('two')[i]
+        if(elem.style===undefined) break;
+        elem.style.setProperty("background-color","#5fe5e5")
+        console.log(elem.id)
+    }
+    state = 2
 }//Win state function
 setInterval(function(){
-    if (started) document.getElementById("timer").innerHTML = Math.floor((Date.now()-start)/1000)
+    if (state) return
+    if (started) document.getElementById("timer").innerHTML = ((Date.now()-start) < 999000 ? Math.floor((Date.now()-start)/1000) : 999)
     else document.getElementById("timer").innerHTML = 0
 },500)
 
 //Display Functions
 function rsz(){
-    height = $(window).height();
-    width = $(window).width();
+    height = Math.max(480,$(window).height());//height tolerance
+    width = Math.max(750,$(window).width());//with tolerance
     cellsize = Math.floor(Math.min(Math.max(30,50*(8/Math.min(x,y))),0.7*width/x,0.75*height/y))
-    margin = (height-(.17*height+y*(cellsize+2)))/2-1
+    margin = (height-(.17*height+y*(cellsize+2)))/2-11
     varbs.style.setProperty('--cell',cellsize+'px')
     varbs.style.setProperty('--font',Math.round(cellsize * .7)+'px')
     varbs.style.setProperty('--borders',border = Math.round(cellsize * .1)+'px')
@@ -172,7 +189,7 @@ function rsz(){
     varbs.style.setProperty('--footh',Math.floor(.07*height)+'px')
     varbs.style.setProperty('--umargin',Math.ceil(margin)+'px')
     varbs.style.setProperty('--dmargin',Math.floor(margin)+'px')
-    document.querySelector('.scoreboard').style.setProperty("margin-left",Math.max((width/2-500),25)+"px")
+    varbs.style.setProperty('--navmargin',Math.floor(.01*height)+'px')
     console.log("Page Resized: "+width+", "+height)
 }//Change CSS size variables based on page and table size
 
@@ -185,7 +202,7 @@ function easyChangeBoard(w,h,d) {
     y = h;
     bc = Math.ceil(w*h*d);
     createBoard();
-}
+}//Console command to change board size
 
 //Settings Functions
 function change(){
@@ -202,11 +219,21 @@ function change(){
     document.getElementById("hspan").innerHTML = iy
     document.getElementById("bspan").innerHTML = ib
     document.getElementById("dspan").innerHTML = Math.round(ib*100/(ix*iy))/100
-}
+}//Manage frontend size controls
 function regenerate(){
     if(!confirm("Reset the game board with new settings?")) return
     x = parseInt(document.getElementById("width").value)
     y = parseInt(document.getElementById("height").value)
     bc = parseInt(document.getElementById("mines").value)
     createBoard()
-}
+}//Apply size changes
+function forfeit(){
+    if(bombs[0]===undefined || state) return
+    if(!confirm("Forfeit and reveal bombs?")) return
+    lose()
+}//Reset button functionality
+function menu(id){
+    var elem = document.getElementById(id)
+    if(elem.style.display == "none"){elem.style.display = "inherit";console.log('Opened '+id);return}
+    if(elem.style.display == "inherit"){elem.style.display = "none";console.log('Closed '+id);return}
+}//Open a menu
