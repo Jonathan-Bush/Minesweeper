@@ -8,6 +8,7 @@ var ix=28;iy=20;ib=112;//input values
 var varbs = document.querySelector(":root");//Get CSS variables
 var start = Date.now()
 var started = 0, state=0;
+$('body').mousedown(function(e){if(e.button==1)return false});
 window.addEventListener("resize",rsz,true);//Resize listener
 createBoard();//Start
 
