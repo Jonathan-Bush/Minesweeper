@@ -10,11 +10,19 @@
     --border: #87af44;
     --gameborder: #285c29;
     --bborder: #2a602b;
+    --bselected: #ff0;
     --navbg: #151a15;
     --sbbg: #4a802c;
+    --menubg: #4a802cd5;
     --button: #5fe5e5;
+    --bbackground: #5a3;
+    --bselectedbg: #5ab035;
+    --slidertrack: #052705;
     --text: white;
     --buttontext: black;
+    --headertext: black;
+    --textborder: black;
+    --dimtext: darkslateblue;
     --umargin: 15px;
     --dmargin: 15px;
     --cell: 30px;
@@ -23,6 +31,22 @@
     --small: 24px;
     --footh: 70px;
     --bmargin: 75px;
+    /*Image Sources (xflag and mine are only used in js)*/
+    --background: url(assets/grassbg.webp);
+    --flag: url(assets/flag.png);
+    --clock: url(assets/clock.png);
+    --trophy: url(assets/trophy.png); /*do this*/
+    --settings: url(assets/settings.png);
+    --github: url(assets/github.png);
+    --forfeit: url(assets/reset.png);
+    --info: url(assets/info.png);
+    --beginner: url(assets/beginner.png); /*do this*/ 
+    --easy: url(assets/easy.png); /*do this*/
+    --medium: url(assets/medium.png); /*do this*/
+    --hard: url(assets/hard.png); /*do this*/
+    --extreme: url(assets/extreme.png); /*do this*/
+    --saved: url(assets/saved.png);
+    --custom: url(assets/custom.png); /*do this*/
 }
 body{width:100%;height:98%;margin:0;padding:0;background-image:url(assets/grassbg.webp);background-size:cover}
 html{width:100%;background-color: var(--navbg);font-family:Helvetica;}
@@ -81,20 +105,29 @@ button{cursor:pointer;}
 
 /*Menus*/
 .menuContainer{position:absolute;height:100%;width:100%;background-color:#000c;justify-content:center;align-items:center}
-.menu{background-color:var(--sbbg);border: 12px solid var(--bborder);border-radius:36px;font-size:20px;color:var(--text)}
-.accept{position:absolute;bottom:10px;left:150px;width:150px;height:40px;background-color:var(--button);border-radius:10px;font-size:20px;font-weight:bolder}
+.menu{background-color:var(--menubg);border: 12px solid var(--bborder);border-radius:36px;font-size:20px;color:var(--text)}
+.accept{position:absolute;bottom:10px;width:150px;height:40px;background-color:var(--button);border-radius:10px;font-size:20px;font-weight:bolder}
+.accept:hover{filter:brightness(1.2)}
+.header{font-size:24px;color:var(--bborder);font-weight:bold;text-decoration:underline;-webkit-text-stroke-width:1px;-webkit-text-stroke-color:var(--textborder);}
+.diffdiv{width:100%;height:60px;border:4px solid var(--bborder);border-radius:16px;margin:6px;display:flex;align-items:center}
+.diffradio{line-height:50px;height:50px;width:50px;margin-right:15px;border-radius:50%;
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
+    background-color:var(--bbackground);
+    background-size: cover;
+    border: 5px solid var(--bborder);
+}
+.diffradio:hover{filter: brightness(1.6)}
+.diffradio:checked{border: 5px solid var(--bselected);background-color:var(--bselectedbg);}
 
 /*Settings*/
-.customization{text-align:center;width:400px;font-weight:bold;color:var(--text);font-size:16px;display:inline-block;height:100px}
 .sliders{display:inline-block;color:green;width:40%}
-.left{width:8%;float:left;text-align:right;margin-right:2%}
-.right{width:8%;float:right;text-align:left;margin-left:2%}
+.left{width:15%;float:left;text-align:right;margin-right:2%}
+.right{width:15%;float:right;text-align:left;margin-left:2%}
 .farleft{width:25%;float:left;text-align:right}
-.farright{width:15%;float:right;margin-top:25px;height:40px;}
-.dspan{font-size:9px;color:dimgray}
+.dspan{font-size:9px;color:var(--dimtext);position:absolute;top:15px}
 input[type="range"]{-webkit-appearance:none;background:transparent;cursor:pointer;appearance:none;height:15px;width:100%}
-input[type="range"]::-webkit-slider-runnable-track{background:#052705;height:6px;border-radius:3px}
-input[type="range"]::-moz-range-track{background:#052705;height:6px;border-radius:3px}
+input[type="range"]::-webkit-slider-runnable-track{background:var(--slidertrack);height:6px;border-radius:3px}
+input[type="range"]::-moz-range-track{background:var(--slidertrack);height:6px;border-radius:3px}
 input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;margin-top:-4.5px;background-color:yellowgreen;height:14px;width:14px;border-radius:7px}
 input[type="range"]::-moz-range-thumb{border:none;border-radius:7px;height:14px;width:14px;background-color:yellowgreen}
 

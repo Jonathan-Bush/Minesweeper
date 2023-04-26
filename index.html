@@ -17,22 +17,126 @@
         <div id="welcome" class="menuContainer" style="z-index:2;display:none">
             <div class="menu" style="width:450px;height:370px;position:relative">
                 <div style="width:100%;height:72px;text-align:center;font-size:72px;position:relative;color:var(--bborder)">
-                    <span style="-webkit-text-stroke-width:2px;-webkit-text-stroke-color:black;font-weight:bolder;">Welcome!</span>
+                    <span style="-webkit-text-stroke-width:2px;-webkit-text-stroke-color:var(--textborder);font-weight:bolder;">Welcome!</span>
                 </div>
                 <div style="width:100%;margin:10px">
                     Welcome to Jonno's Minesweeper!<br><br>
                     To play, click a tile on the board. The numbers represent the number of mines in uncleared tiles<br>in the 8 surrounding squares. Mark tiles you believe to have a mine with a flag using right<br>click. Once you uncover all safe tiles, you win!<br><br>
                     For difficulty, appearance, and control options,<br>click the settings button in the top right.
                 </div>
-                <button class="accept" onclick="menu('welcome')">
-                    Got it!
-                </button>
+                <button class="accept" style="left:150px" onclick="menu('welcome')">Got it!</button>
             </div>
         </div>
         <div id="settings" class="menuContainer" style="z-index:3;display:none">
-            
+            <div class="menu" style="width:1200px;height:700px;position:relative">
+                <div style="width:100%;height:36px;text-align:center;font-size:36px;position:relative;color:var(--bborder)">
+                    <span style="-webkit-text-stroke-width:1px;-webkit-text-stroke-color:var(--textborder);font-weight:bold;">Settings</span>
+                </div>
+                <div style="width:calc(47% - 20px);height:660px;margin:10px;float:left;line-height:200%;position:relative;">
+                    <div style="text-align:center"><span class="header">Difficulty</span></div>
+                    <div class="diffdiv">
+                        <div style="width:47%;display:flex;align-items:center">
+                            <input type="radio" class="diffradio" name="difficulty" id="dbeginner" style="background-image:var(--beginner)" onclick="apply2()" checked>
+                            Beginner
+                        </div>
+                    </div>
+                    <div class="diffdiv">
+                        <div style="width:47%;display:flex;align-items:center">
+                            <input type="radio" class="diffradio" name="difficulty" id="deasy" style="background-image:var(--easy);" onclick="apply2()">
+                            Easy
+                        </div>
+                    </div>
+                    <div class="diffdiv">
+                        <div style="width:47%;display:flex;align-items:center">
+                            <input type="radio" class="diffradio" name="difficulty" id="dmedium" style="background-image:var(--medium);" onclick="apply2()">
+                            Medium
+                        </div>
+                    </div>
+                    <div class="diffdiv">
+                        <div style="width:47%;display:flex;align-items:center">
+                            <input type="radio" class="diffradio" name="difficulty" id="dhard" style="background-image:var(--hard);" onclick="apply2()">
+                            Hard
+                        </div>
+                    </div>
+                    <div class="diffdiv">
+                        <div style="width:47%;display:flex;align-items:center">
+                            <input type="radio" class="diffradio" name="difficulty" id="dextreme" style="background-image:var(--extreme);" onclick="apply2()">
+                            Extreme
+                        </div>
+                    </div>
+                    <div class="diffdiv" style="height:100px">
+                        <div style="width:30%;display:flex;align-items:center">
+                            <input type="radio" class="diffradio" name="difficulty" id="dcustom" style="background-image:var(--custom); " onclick="apply2()">
+                            Custom
+                        </div>
+                        <div style="width:65%;display:flex;flex-direction:column;align-items:center;float:rght;font-size:15px;line-height:200%">
+                            <div style="width:100%">
+                                <div class="farleft">
+                                    Width: <span id="wspan">28</span>
+                                </div>
+                                <div class="left">
+                                    <span>8</span>
+                                </div>
+                                <div class="sliders">
+                                    <input type="range" min="8" max="40" value="28" class="slider" step="1" id="width" onchange="change()">
+                                </div>
+                                <div class="right">
+                                    40
+                                </div>
+                            </div>
+                            <div style="width:100%">
+                                <div class="farleft">
+                                    Height: <span id="hspan">20</span>
+                                </div>
+                                <div class="left">
+                                    <span>8</span>
+                                </div>
+                                <div class="sliders">
+                                    <input type="range" min="8" max="24" value="20" class="slider" step="1" id="height" onchange="change()">
+                                </div>
+                                <div class="right">
+                                    24
+                                </div>
+                            </div>
+                            <div style="width:100%">
+                                <div class="farleft" style="position:relative">
+                                    Bombs: <span id="bspan">112</span>
+                                    <div class="dspan">Density: <span id="dspan">0.2</span> (Rec .2)</div>
+                                </div>
+                                <div class="left">
+                                    <span id="bombleft">56</span>
+                                </div>
+                                <div class="sliders">
+                                    <input type="range" min="56" max="224" value="112" class="slider" step="1" id="mines" onchange="change()">
+                                </div>
+                                <div class="right">
+                                    <span id="bombright">224</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="diffdiv">
+                        <div style="width:47%;display:flex;align-items:center;position:relative">
+                            <input type="radio" class="diffradio" name="difficulty" id="dsaved" style="background-image:var(--saved);" onclick="apply2()">
+                            Saved
+                            <button class="accept" style="right:0px;width:120px;top:3px;height:45px;font-size:14px" onclick="savediff()">
+                                Save Custom<br>
+                                x <span id="sx">10</span>/y <span id="sy">8</span>/b <span id="sb">10</span>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="accept" style="left:calc(0.235 * 1200px - 68px);width:136px;font-size:15px;height:30px;bottom:20px" onclick="apply()">
+                        Reset and Apply
+                    </button>
+                </div>
+                <div style="width:calc(47% - 20px);height:100%;margin:10px;float:right">
+                    <div style="width:90%;text-align:center"><span class="header">Themes</span></div>
+                    <br>OOOOooooOOooOOoOoOoO coming soon
+                </div>
+                <button class="accept" style="left:calc(0.500 * 1200px - 75px);" onclick="menu('settings')">Exit</button>
+            </div>
         </div>
-        <div id="gameresults" class="menuContainer" style="z-index:4;display:none">
+        <div id="gameresults" class="menuContainer" style="z-index:5;display:none">
             
         </div>
         <nav>

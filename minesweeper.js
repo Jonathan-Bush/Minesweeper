@@ -4,13 +4,45 @@ var x=28,//Board width (cells)
     bombs=[],//initializing to empty
     flags=[],//initializing to empty
     colors = ['#1976d2','#3a8e3d','#d33433','#7b1fa2','#ff9100','darkturquoise','black','gray'];//colors for nums 1-8
-var ix=28;iy=20;ib=112;//input values
+var ix=28,iy=20,ib=112;//input values
+var sx=10,sy=8,sb=10;//saved custom values
+var difficulties = {
+  "beginner": {
+    "x":10,
+    "y":8,
+    "b":10,
+    "_density":0.125
+  },
+  "easy": {
+    "x":14,
+    "y":10,
+    "b":20,
+    "_density":0.143
+  },
+  "medium": {
+    "x":18,
+    "y":14,
+    "b":40,
+    "_density":0.159
+  },
+  "hard": {
+    "x":24,
+    "y":20,
+    "b":99,
+    "_density":0.208
+  },
+  "extreme": {
+    "x":28,
+    "y":24,
+    "b":200,
+    "_density":0.297
+  }
+}
 var varbs = document.querySelector(":root");//Get CSS variables
 var start = Date.now()
 var started = 0, state=0;
-$('body').mousedown(function(e){if(e.button==1)return false});
 window.addEventListener("resize",rsz,true);//Resize listener
-createBoard();//Start
+apply();//Start
 
 //Controls Functions
 function lc(c1,c2){
@@ -19,7 +51,7 @@ function lc(c1,c2){
     if(self.className == "b1"||self.className == "b2") return // Already-Clicked Check
     if(bombs === undefined || bombs.length == 0){initialize(c1,c2); return} // Initialize Check
     if(self.hasChildNodes() && self.firstChild.className=="flag") return // Stop click on flag
-    if(bombs[c1*y+c2]){self.style.backgroundColor = "red";alert('L you lost lol');lose(); return} // Click a Bomb Check    
+    if(bombs[c1*y+c2]){self.style.backgroundColor = "red";setTimeout(function(){alert('L you lost lol')},50);lose(); return} // Click a Bomb Check    
     self.className = (self.className == 'one' ? 'b1' : 'b2') // Apply Click
     count = bombcheck(c1,c2)
     if(count==0){ // Clear nearby tiles if blank
@@ -99,8 +131,9 @@ function createBoard(){
             }, false);
         }
     }
-    rsz();bombs=[];flags=[];started=0;state=0;
+    bombs=[],flags=[],started=0,state=0;
     document.getElementById("flags").innerHTML = bc-flags.reduce(function(a,b){return a+b},0);
+    rsz();
 }//Generates table of y rows and x columns in a div of id="minesweeper" or appended to body
 function initialize(a,b){
     b1 = [];
@@ -155,7 +188,6 @@ function lose(){
     state = 1
 }//Loss state function
 function win(){
-        alert('NO WAY YOU WON');
     for(i in document.getElementsByClassName('one')){
         elem = document.getElementsByClassName('one')[i]
         if(elem.style===undefined) break;
@@ -167,6 +199,7 @@ function win(){
         elem.style.setProperty("background-color","#5fe5e5")
     }
     state = 2
+    setTimeout(function(){alert('NO WAY YOU WON');},50)
 }//Win state function
 setInterval(function(){
     if (state) return
@@ -178,7 +211,7 @@ setInterval(function(){
 function rsz(){
     height = Math.max(480,$(window).height());//height tolerance
     width2 = Math.max($(window).width());//width tolerance
-    cellsize = Math.round(Math.min(Math.max(32,52*(8/Math.min(x,y))),.65*(width2+250)/x,.88*(height-150)/y))-2
+    cellsize = Math.round(Math.min(Math.max(32,Math.min(77*(8/Math.min(x,y)),52)),.65*(width2+250)/x,.9*(height-160)/y))-2
     margin = (height-(100+Math.max(Math.floor(.07*height),30)+y*(cellsize+2)))/2-15
     varbs.style.setProperty('--cell',cellsize+'px')
     varbs.style.setProperty('--font',Math.round(cellsize * .7)+'px')
@@ -217,14 +250,63 @@ function change(){
     document.getElementById("hspan").innerHTML = iy
     document.getElementById("bspan").innerHTML = ib
     document.getElementById("dspan").innerHTML = Math.round(ib*100/(ix*iy))/100
+    if (document.querySelector('input[name="difficulty"]:checked').id == "dcustom") apply2()
 }//Manage frontend size controls
+function savediff(){
+    if(!confirm('Overwrite saved settings?')) return
+    sx = parseInt(document.getElementById("width").value)
+    sy = parseInt(document.getElementById("height").value)
+    sb = parseInt(document.getElementById("mines").value)
+    document.getElementById("sx").innerHTML = sx
+    document.getElementById("sy").innerHTML = sy
+    document.getElementById("sb").innerHTML = sb
+}//Save custom values to difficulty
+function apply(){
+    if(bombs.length == 0 || state || confirm('Reset the game board with new settings?')) regenerate()
+}//Apply button
+function apply2(){
+    if(bombs.length == 0 || state) regenerate()
+}//Silent apply function
 function regenerate(){
-    if(!confirm("Reset the game board with new settings?")) return
-    x = parseInt(document.getElementById("width").value)
-    y = parseInt(document.getElementById("height").value)
-    bc = parseInt(document.getElementById("mines").value)
+    switch(document.querySelector('input[name="difficulty"]:checked').id){
+        case "dbeginner":
+            x = difficulties.beginner.x
+            y = difficulties.beginner.y
+            bc = difficulties.beginner.b
+        break
+        case "deasy":
+            x = difficulties.easy.x
+            y = difficulties.easy.y
+            bc = difficulties.easy.b
+        break
+        case "dmedium":
+            x = difficulties.medium.x
+            y = difficulties.medium.y
+            bc = difficulties.medium.b
+        break
+        case "dhard":
+            x = difficulties.hard.x
+            y = difficulties.hard.y
+            bc = difficulties.hard.b
+        break
+        case "dextreme":
+            x = difficulties.extreme.x
+            y = difficulties.extreme.y
+            bc = difficulties.extreme.b
+        break
+        case "dcustom":
+            x = parseInt(document.getElementById("width").value)
+            y = parseInt(document.getElementById("height").value)
+            bc = parseInt(document.getElementById("mines").value)
+        break
+        case "dsaved":
+            x = sx
+            y = sy
+            bc = sb
+        break
+    }
     createBoard()
-}//Apply size changes
+}//Apply difficulty changes
 function forfeit(){
     if(bombs[0]===undefined || state) return
     if(!confirm("Forfeit and reveal bombs?")) return
