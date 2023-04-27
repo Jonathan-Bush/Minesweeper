@@ -8,23 +8,54 @@
     --b1hover: #d4c4c4;
     --b2hover: #e0d2af;
     --border: #87af44;
-    --navbg: #334626;
+    --gameborder: #285c29;
+    --bborder: #2a602b;
+    --bselected: #ff0;
+    --navbg: #151a15;
+    --sbbg: #4a802c;
+    --menubg: #4a802cd5;
+    --button: #5fe5e5;
+    --bbackground: #5a3;
+    --bselectedbg: #5ab035;
+    --slidertrack: #052705;
+    --text: white;
+    --buttontext: black;
+    --headertext: black;
+    --textborder: black;
+    --dimtext: darkslateblue;
     --umargin: 15px;
     --dmargin: 15px;
     --cell: 30px;
     --font: 21px;
     --borders: 3px;
     --small: 24px;
-    --navh: 100px;
     --footh: 70px;
+    --bmargin: 75px;
+    /*Image Sources (xflag and mine are only used in js)*/
+    --background: url(assets/grassbg.webp);
+    --flag: url(assets/flag.png);
+    --clock: url(assets/clock.png);
+    --trophy: url(assets/trophy.png); /*do this*/
+    --settings: url(assets/settings.png);
+    --github: url(assets/github.png);
+    --forfeit: url(assets/reset.png);
+    --info: url(assets/info.png);
+    --beginner: url(assets/beginner.png); /*do this*/ 
+    --easy: url(assets/easy.png); /*do this*/
+    --medium: url(assets/medium.png); /*do this*/
+    --hard: url(assets/hard.png); /*do this*/
+    --extreme: url(assets/extreme.png); /*do this*/
+    --saved: url(assets/saved.png);
+    --custom: url(assets/custom.png); /*do this*/
 }
-html,body{
-    width:100%;
-    margin:0;
-    padding:0;
-    background-color:#222;
-}
-#minesweeper table tr td{
+body{width:100%;height:98%;margin:0;padding:0;background-image:url(assets/grassbg.webp);background-size:cover}
+html{width:100%;background-color: var(--navbg);font-family:Helvetica;}
+
+nav{background-color:var(--navbg);width:100%;height:100px;text-align:center}
+footer{background-color:var(--navbg);width:100%;height:max(var(--footh),40px)}
+
+/*Minesweeper Stuff*/
+td.one,td.two,td.b1,td.b2{
     max-width:var(--cell);width:var(--cell);
     max-height:var(--cell);height:var(--cell);
     font-family:Helvetica;
@@ -38,201 +69,240 @@ html,body{
 .two{background-color:var(--tile2)}
 .one:hover{background-color:var(--t1hover)}
 .two:hover{background-color:var(--t2hover)}
-#minesweeper table tr td.b1{background-color:var(--blank1);width:var(--small);height:var(--small)}
-#minesweeper table tr td.b2{background-color:var(--blank2);width:var(--small);height:var(--small)}
-#minesweeper table tr td.b1:not(:empty):hover{background-color:var(--b1hover)}
-#minesweeper table tr td.b2:not(:empty):hover{background-color:var(--b2hover)}
+tr td.b1{background-color:var(--blank1);width:var(--small);height:var(--cell)}
+tr td.b2{background-color:var(--blank2);width:var(--small);height:var(--cell)}
+tr td.b1:not(:empty):hover{background-color:var(--b1hover)}
+tr td.b2:not(:empty):hover{background-color:var(--b2hover)}
 .mine{height:80%;width:80%;object-fit:cover}
 .flag{height:80%;width:80%;object-fit:cover}
-#minesweeper table{display:inline-block}
+#minesweeper table{display:inline-block;border: 8px solid var(--gameborder);border-radius: 8px}
 #minesweeper{text-align:center;margin-top:var(--umargin);margin-bottom:var(--dmargin)}
-nav{background-color:var(--navbg);width:100%;height:var(--navh);text-align:left}
-footer{background-color:var(--navbg);width:100%;height:var(--footh)}
 
-.scoreboard{margin-left:8%;width:200px;display:inline-block;height:var(--navh);text-align:center}
-.flagbox{width:50%;float:left}
-.timebox{width:50%;float:right}
-.icon{display:inline-block}
-.scoreboard span{font-size:24px;color:white;font-family:Helvetica;font-weight:bold}
+/*Navbar Buttons*/
+button{cursor:pointer;}
+.hbutton{float:left;height:100%;width:50px;
+    border-radius:50%;border:3px solid var(--bborder);
+    background-color:var(--sbbg);position:relative;}
+.bicon{position:absolute;top:2px;left:2px;width:40px;height:40px}
+.popuptext{background-color:#333;color:var(--text);text-align:center;
+    border-radius:6px;padding:8px 0;width:66px;visibility:hidden;
+    position:absolute;z-index:1;top:125%;left:50%;margin-left:-33px}
+.hbutton:hover .popuptext{visibility:visible;-webkit-animation: fadeIn 0.25s;animation: fadeIn 0.25s}
+.hbutton:hover {filter: brightness(1.6)}
+.popuptext::after{content: "";position:absolute;top:-30%;left:50%;margin-left:-5px;
+    border-width:5px;border-style:solid;border-color:transparent transparent #333 transparent}
+@-webkit-keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-.customization{text-align:center;width:400px;font-family:Helvetica;font-weight:bold;color:white;font-size:16px;display:inline-block;height:var(--navh)}
+/*Scoreboard*/
+.scoreboard{width:200px;height:60px;
+    position:absolute;left:-108px;top:-4px;text-align:left;line-height:54px;
+    background-color:var(--sbbg);border-radius:16px;border: 8px solid var(--bborder);}
+.flagbox,.timebox{position:absolute;width:100px;float:left;margin:8px 0 8px 8px;height:100%}
+.icon{height:90%;vertical-align:middle;display:inline-block;margin:-12px 0 0 -8px;}
+.scoreboard span{font-size:24px;color:var(--text);display:inline-block;vertical-align:middle;margin:-12px 0 0 -4px}
+
+
+/*Menus*/
+.menuContainer{position:absolute;height:100%;width:100%;background-color:#000c;justify-content:center;align-items:center}
+.menu{background-color:var(--menubg);border: 12px solid var(--bborder);border-radius:36px;font-size:20px;color:var(--text)}
+.accept{position:absolute;bottom:10px;width:150px;height:40px;background-color:var(--button);border-radius:10px;font-size:20px;font-weight:bolder}
+.accept:hover{filter:brightness(1.2)}
+.header{font-size:24px;color:var(--bborder);font-weight:bold;text-decoration:underline;-webkit-text-stroke-width:1px;-webkit-text-stroke-color:var(--textborder);}
+.diffdiv{width:100%;height:60px;border:4px solid var(--bborder);border-radius:16px;margin:6px;display:flex;align-items:center}
+.diffradio{line-height:50px;height:50px;width:50px;margin-right:15px;border-radius:50%;
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
+    background-color:var(--bbackground);
+    background-size: cover;
+    border: 5px solid var(--bborder);
+}
+.diffradio:hover{filter: brightness(1.6)}
+.diffradio:checked{border: 5px solid var(--bselected);background-color:var(--bselectedbg);}
+
+/*Settings*/
 .sliders{display:inline-block;color:green;width:40%}
-.left{width:8%;float:left;text-align:right;margin-right:2%}
-.right{width:8%;float:right;text-align:left;margin-left:2%}
+.left{width:15%;float:left;text-align:right;margin-right:2%}
+.right{width:15%;float:right;text-align:left;margin-left:2%}
 .farleft{width:25%;float:left;text-align:right}
-.farright{width:15%;float:right;margin-top:25px;height:40px;}
-.dspan{font-size:9px;color:dimgray}
-
+.dspan{font-size:9px;color:var(--dimtext);position:absolute;top:15px}
 input[type="range"]{-webkit-appearance:none;background:transparent;cursor:pointer;appearance:none;height:15px;width:100%}
-input[type="range"]::-webkit-slider-runnable-track{background:#052705;height:6px;border-radius:3px}
-input[type="range"]::-moz-range-track{background:#052705;height:6px;border-radius:3px}
+input[type="range"]::-webkit-slider-runnable-track{background:var(--slidertrack);height:6px;border-radius:3px}
+input[type="range"]::-moz-range-track{background:var(--slidertrack);height:6px;border-radius:3px}
 input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;margin-top:-4.5px;background-color:yellowgreen;height:14px;width:14px;border-radius:7px}
 input[type="range"]::-moz-range-thumb{border:none;border-radius:7px;height:14px;width:14px;background-color:yellowgreen}
 
 
-
-/*Bless your soul, kind traveler. You do not want to venture farther.*/
+/*Bless your soul, kind traveler. You do not want to venture farther.----------------------------------------------*/
+/*Better size for cells with no horizontal borders*/
+td.b2 + td.b1:has(+td.b2){width:var(--cell)}
+td.b1 + td.b2:has(+td.b1){width:var(--cell)}
+td.b1:first-child:has(+td.b2){width:var(--cell)}
+td.b2:first-child:has(+td.b1){width:var(--cell)}
+td.b1 + td.b2:last-child{width:var(--cell)}
+td.b2 + td.b1:last-child{width:var(--cell)}
+/*Horizontal Borders*/
 td.one + td.b2{border-left:var(--borders) solid var(--border)}
 td.two + td.b1{border-left:var(--borders) solid var(--border)}
 td.b2:has(+td.one){border-right:var(--borders) solid var(--border)}
 td.b1:has(+td.two){border-right:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(1).one) td:nth-child(1).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(2).one) td:nth-child(2).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(3).one) td:nth-child(3).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(4).one) td:nth-child(4).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(5).one) td:nth-child(5).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(6).one) td:nth-child(6).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(7).one) td:nth-child(7).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(8).one) td:nth-child(8).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(9).one) td:nth-child(9).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(10).one) td:nth-child(10).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(11).one) td:nth-child(11).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(12).one) td:nth-child(12).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(13).one) td:nth-child(13).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(14).one) td:nth-child(14).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(15).one) td:nth-child(15).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(16).one) td:nth-child(16).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(17).one) td:nth-child(17).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(18).one) td:nth-child(18).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(19).one) td:nth-child(19).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(20).one) td:nth-child(20).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(21).one) td:nth-child(21).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(22).one) td:nth-child(22).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(23).one) td:nth-child(23).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(24).one) td:nth-child(24).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(25).one) td:nth-child(25).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(26).one) td:nth-child(26).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(27).one) td:nth-child(27).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(28).one) td:nth-child(28).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(29).one) td:nth-child(29).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(30).one) td:nth-child(30).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(31).one) td:nth-child(31).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(32).one) td:nth-child(32).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(33).one) td:nth-child(33).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(34).one) td:nth-child(34).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(35).one) td:nth-child(35).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(36).one) td:nth-child(36).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(37).one) td:nth-child(37).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(38).one) td:nth-child(38).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(39).one) td:nth-child(39).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(40).one) td:nth-child(40).b2{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(1).two) td:nth-child(1).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(2).two) td:nth-child(2).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(3).two) td:nth-child(3).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(4).two) td:nth-child(4).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(5).two) td:nth-child(5).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(6).two) td:nth-child(6).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(7).two) td:nth-child(7).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(8).two) td:nth-child(8).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(9).two) td:nth-child(9).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(10).two) td:nth-child(10).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(11).two) td:nth-child(11).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(12).two) td:nth-child(12).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(13).two) td:nth-child(13).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(14).two) td:nth-child(14).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(15).two) td:nth-child(15).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(16).two) td:nth-child(16).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(17).two) td:nth-child(17).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(18).two) td:nth-child(18).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(19).two) td:nth-child(19).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(20).two) td:nth-child(20).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(21).two) td:nth-child(21).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(22).two) td:nth-child(22).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(23).two) td:nth-child(23).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(24).two) td:nth-child(24).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(25).two) td:nth-child(25).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(26).two) td:nth-child(26).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(27).two) td:nth-child(27).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(28).two) td:nth-child(28).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(29).two) td:nth-child(29).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(30).two) td:nth-child(30).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(31).two) td:nth-child(31).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(32).two) td:nth-child(32).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(33).two) td:nth-child(33).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(34).two) td:nth-child(34).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(35).two) td:nth-child(35).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(36).two) td:nth-child(36).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(37).two) td:nth-child(37).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(38).two) td:nth-child(38).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(39).two) td:nth-child(39).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(+tr td:nth-child(40).two) td:nth-child(40).b1{border-bottom:var(--borders) solid var(--border)}
-tr:has(td:nth-child(1).one) + tr td:nth-child(1).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(2).one) + tr td:nth-child(2).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(3).one) + tr td:nth-child(3).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(4).one) + tr td:nth-child(4).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(5).one) + tr td:nth-child(5).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(6).one) + tr td:nth-child(6).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(7).one) + tr td:nth-child(7).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(8).one) + tr td:nth-child(8).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(9).one) + tr td:nth-child(9).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(10).one) + tr td:nth-child(10).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(11).one) + tr td:nth-child(11).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(12).one) + tr td:nth-child(12).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(13).one) + tr td:nth-child(13).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(14).one) + tr td:nth-child(14).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(15).one) + tr td:nth-child(15).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(16).one) + tr td:nth-child(16).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(17).one) + tr td:nth-child(17).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(18).one) + tr td:nth-child(18).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(19).one) + tr td:nth-child(19).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(20).one) + tr td:nth-child(20).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(21).one) + tr td:nth-child(21).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(22).one) + tr td:nth-child(22).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(23).one) + tr td:nth-child(23).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(24).one) + tr td:nth-child(24).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(25).one) + tr td:nth-child(25).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(26).one) + tr td:nth-child(26).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(27).one) + tr td:nth-child(27).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(28).one) + tr td:nth-child(28).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(29).one) + tr td:nth-child(29).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(30).one) + tr td:nth-child(30).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(31).one) + tr td:nth-child(31).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(32).one) + tr td:nth-child(32).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(33).one) + tr td:nth-child(33).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(34).one) + tr td:nth-child(34).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(35).one) + tr td:nth-child(35).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(36).one) + tr td:nth-child(36).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(37).one) + tr td:nth-child(37).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(38).one) + tr td:nth-child(38).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(39).one) + tr td:nth-child(39).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(40).one) + tr td:nth-child(40).b2{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(1).two) + tr td:nth-child(1).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(2).two) + tr td:nth-child(2).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(3).two) + tr td:nth-child(3).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(4).two) + tr td:nth-child(4).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(5).two) + tr td:nth-child(5).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(6).two) + tr td:nth-child(6).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(7).two) + tr td:nth-child(7).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(8).two) + tr td:nth-child(8).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(9).two) + tr td:nth-child(9).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(10).two) + tr td:nth-child(10).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(11).two) + tr td:nth-child(11).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(12).two) + tr td:nth-child(12).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(13).two) + tr td:nth-child(13).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(14).two) + tr td:nth-child(14).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(15).two) + tr td:nth-child(15).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(16).two) + tr td:nth-child(16).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(17).two) + tr td:nth-child(17).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(18).two) + tr td:nth-child(18).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(19).two) + tr td:nth-child(19).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(20).two) + tr td:nth-child(20).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(21).two) + tr td:nth-child(21).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(22).two) + tr td:nth-child(22).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(23).two) + tr td:nth-child(23).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(24).two) + tr td:nth-child(24).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(25).two) + tr td:nth-child(25).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(26).two) + tr td:nth-child(26).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(27).two) + tr td:nth-child(27).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(28).two) + tr td:nth-child(28).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(29).two) + tr td:nth-child(29).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(30).two) + tr td:nth-child(30).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(31).two) + tr td:nth-child(31).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(32).two) + tr td:nth-child(32).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(33).two) + tr td:nth-child(33).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(34).two) + tr td:nth-child(34).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(35).two) + tr td:nth-child(35).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(36).two) + tr td:nth-child(36).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(37).two) + tr td:nth-child(37).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(38).two) + tr td:nth-child(38).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(39).two) + tr td:nth-child(39).b1{border-top:var(--borders) solid var(--border)}
-tr:has(td:nth-child(40).two) + tr td:nth-child(40).b1{border-top:var(--borders) solid var(--border)}
+/*Vertical Borders*/
+tr:has(+tr td:nth-child(1).one) td:nth-child(1).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(2).one) td:nth-child(2).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(3).one) td:nth-child(3).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(4).one) td:nth-child(4).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(5).one) td:nth-child(5).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(6).one) td:nth-child(6).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(7).one) td:nth-child(7).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(8).one) td:nth-child(8).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(9).one) td:nth-child(9).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(10).one) td:nth-child(10).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(11).one) td:nth-child(11).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(12).one) td:nth-child(12).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(13).one) td:nth-child(13).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(14).one) td:nth-child(14).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(15).one) td:nth-child(15).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(16).one) td:nth-child(16).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(17).one) td:nth-child(17).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(18).one) td:nth-child(18).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(19).one) td:nth-child(19).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(20).one) td:nth-child(20).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(21).one) td:nth-child(21).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(22).one) td:nth-child(22).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(23).one) td:nth-child(23).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(24).one) td:nth-child(24).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(25).one) td:nth-child(25).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(26).one) td:nth-child(26).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(27).one) td:nth-child(27).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(28).one) td:nth-child(28).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(29).one) td:nth-child(29).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(30).one) td:nth-child(30).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(31).one) td:nth-child(31).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(32).one) td:nth-child(32).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(33).one) td:nth-child(33).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(34).one) td:nth-child(34).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(35).one) td:nth-child(35).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(36).one) td:nth-child(36).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(37).one) td:nth-child(37).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(38).one) td:nth-child(38).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(39).one) td:nth-child(39).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(40).one) td:nth-child(40).b2{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(1).two) td:nth-child(1).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(2).two) td:nth-child(2).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(3).two) td:nth-child(3).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(4).two) td:nth-child(4).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(5).two) td:nth-child(5).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(6).two) td:nth-child(6).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(7).two) td:nth-child(7).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(8).two) td:nth-child(8).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(9).two) td:nth-child(9).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(10).two) td:nth-child(10).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(11).two) td:nth-child(11).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(12).two) td:nth-child(12).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(13).two) td:nth-child(13).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(14).two) td:nth-child(14).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(15).two) td:nth-child(15).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(16).two) td:nth-child(16).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(17).two) td:nth-child(17).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(18).two) td:nth-child(18).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(19).two) td:nth-child(19).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(20).two) td:nth-child(20).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(21).two) td:nth-child(21).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(22).two) td:nth-child(22).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(23).two) td:nth-child(23).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(24).two) td:nth-child(24).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(25).two) td:nth-child(25).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(26).two) td:nth-child(26).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(27).two) td:nth-child(27).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(28).two) td:nth-child(28).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(29).two) td:nth-child(29).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(30).two) td:nth-child(30).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(31).two) td:nth-child(31).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(32).two) td:nth-child(32).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(33).two) td:nth-child(33).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(34).two) td:nth-child(34).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(35).two) td:nth-child(35).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(36).two) td:nth-child(36).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(37).two) td:nth-child(37).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(38).two) td:nth-child(38).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(39).two) td:nth-child(39).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(+tr td:nth-child(40).two) td:nth-child(40).b1{border-bottom:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(1).one) + tr td:nth-child(1).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(2).one) + tr td:nth-child(2).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(3).one) + tr td:nth-child(3).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(4).one) + tr td:nth-child(4).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(5).one) + tr td:nth-child(5).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(6).one) + tr td:nth-child(6).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(7).one) + tr td:nth-child(7).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(8).one) + tr td:nth-child(8).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(9).one) + tr td:nth-child(9).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(10).one) + tr td:nth-child(10).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(11).one) + tr td:nth-child(11).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(12).one) + tr td:nth-child(12).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(13).one) + tr td:nth-child(13).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(14).one) + tr td:nth-child(14).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(15).one) + tr td:nth-child(15).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(16).one) + tr td:nth-child(16).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(17).one) + tr td:nth-child(17).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(18).one) + tr td:nth-child(18).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(19).one) + tr td:nth-child(19).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(20).one) + tr td:nth-child(20).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(21).one) + tr td:nth-child(21).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(22).one) + tr td:nth-child(22).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(23).one) + tr td:nth-child(23).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(24).one) + tr td:nth-child(24).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(25).one) + tr td:nth-child(25).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(26).one) + tr td:nth-child(26).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(27).one) + tr td:nth-child(27).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(28).one) + tr td:nth-child(28).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(29).one) + tr td:nth-child(29).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(30).one) + tr td:nth-child(30).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(31).one) + tr td:nth-child(31).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(32).one) + tr td:nth-child(32).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(33).one) + tr td:nth-child(33).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(34).one) + tr td:nth-child(34).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(35).one) + tr td:nth-child(35).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(36).one) + tr td:nth-child(36).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(37).one) + tr td:nth-child(37).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(38).one) + tr td:nth-child(38).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(39).one) + tr td:nth-child(39).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(40).one) + tr td:nth-child(40).b2{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(1).two) + tr td:nth-child(1).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(2).two) + tr td:nth-child(2).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(3).two) + tr td:nth-child(3).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(4).two) + tr td:nth-child(4).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(5).two) + tr td:nth-child(5).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(6).two) + tr td:nth-child(6).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(7).two) + tr td:nth-child(7).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(8).two) + tr td:nth-child(8).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(9).two) + tr td:nth-child(9).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(10).two) + tr td:nth-child(10).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(11).two) + tr td:nth-child(11).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(12).two) + tr td:nth-child(12).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(13).two) + tr td:nth-child(13).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(14).two) + tr td:nth-child(14).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(15).two) + tr td:nth-child(15).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(16).two) + tr td:nth-child(16).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(17).two) + tr td:nth-child(17).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(18).two) + tr td:nth-child(18).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(19).two) + tr td:nth-child(19).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(20).two) + tr td:nth-child(20).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(21).two) + tr td:nth-child(21).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(22).two) + tr td:nth-child(22).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(23).two) + tr td:nth-child(23).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(24).two) + tr td:nth-child(24).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(25).two) + tr td:nth-child(25).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(26).two) + tr td:nth-child(26).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(27).two) + tr td:nth-child(27).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(28).two) + tr td:nth-child(28).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(29).two) + tr td:nth-child(29).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(30).two) + tr td:nth-child(30).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(31).two) + tr td:nth-child(31).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(32).two) + tr td:nth-child(32).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(33).two) + tr td:nth-child(33).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(34).two) + tr td:nth-child(34).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(35).two) + tr td:nth-child(35).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(36).two) + tr td:nth-child(36).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(37).two) + tr td:nth-child(37).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(38).two) + tr td:nth-child(38).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(39).two) + tr td:nth-child(39).b1{border-top:var(--borders) solid var(--border);height:var(--small)}
+tr:has(td:nth-child(40).two) + tr td:nth-child(40).b1{border-top:var(--borders) solid var(--border);height:var(--small)}

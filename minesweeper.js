@@ -4,21 +4,54 @@ var x=28,//Board width (cells)
     bombs=[],//initializing to empty
     flags=[],//initializing to empty
     colors = ['#1976d2','#3a8e3d','#d33433','#7b1fa2','#ff9100','darkturquoise','black','gray'];//colors for nums 1-8
-var ix=28;iy=20;ib=112;//input values
+var ix=28,iy=20,ib=112;//input values
+var sx=10,sy=8,sb=10;//saved custom values
+var difficulties = {
+  "beginner": {
+    "x":10,
+    "y":8,
+    "b":10,
+    "_density":0.125
+  },
+  "easy": {
+    "x":14,
+    "y":10,
+    "b":20,
+    "_density":0.143
+  },
+  "medium": {
+    "x":18,
+    "y":14,
+    "b":40,
+    "_density":0.159
+  },
+  "hard": {
+    "x":24,
+    "y":20,
+    "b":99,
+    "_density":0.208
+  },
+  "extreme": {
+    "x":28,
+    "y":24,
+    "b":200,
+    "_density":0.297
+  }
+}
 var varbs = document.querySelector(":root");//Get CSS variables
 var start = Date.now()
-var started = 0;
-$('body').mousedown(function(e){if(e.button==1)return false});
+var started = 0, state=0;
 window.addEventListener("resize",rsz,true);//Resize listener
-createBoard();//Start
+apply();//Start
 
 //Controls Functions
 function lc(c1,c2){
+    if(state){if(confirm("Start new game?")) createBoard(); return}// Reset Game
     self = document.getElementById("x"+c1+"y"+c2); // Get Element
     if(self.className == "b1"||self.className == "b2") return // Already-Clicked Check
     if(bombs === undefined || bombs.length == 0){initialize(c1,c2); return} // Initialize Check
     if(self.hasChildNodes() && self.firstChild.className=="flag") return // Stop click on flag
-    if(bombs[c1*y+c2]){self.style.backgroundColor = "red";lose(); return} // Click a Bomb Check    
+    if(bombs[c1*y+c2]){self.style.backgroundColor = "red";setTimeout(function(){alert('L you lost lol')},50);lose(); return} // Click a Bomb Check    
     self.className = (self.className == 'one' ? 'b1' : 'b2') // Apply Click
     count = bombcheck(c1,c2)
     if(count==0){ // Clear nearby tiles if blank
@@ -38,20 +71,22 @@ function lc(c1,c2){
     if((document.getElementsByClassName("one").length+document.getElementsByClassName("two").length)==bc) win();
 }//Applies left click (clear) to coordinates, includes most logic
 function mc(c1,c2){
+    if(state) return
     self = document.getElementById("x"+c1+"y"+c2); // Get Element
     if(self.className == "one"||self.className == "two") return // Must clear blanks
     if(self.innerHTML && flagcheck(c1,c2) == bombcheck(c1,c2)){ //Allow on numbered tiles with equal numbers flags and bombs
-        if(c1+1<x) lc(c1+1,c2)
-        if(c2+1<y) lc(c1,c2+1)
-        if(c1 > 0) lc(c1-1,c2)
-        if(c2 > 0) lc(c1,c2-1)
-        if(c1+1<x && c2+1<y) lc(c1+1,c2+1)
-        if(c1+1<x && c2 > 0) lc(c1+1,c2-1)
-        if(c1 > 0 && c2+1<y) lc(c1-1,c2+1)
-        if(c1 > 0 && c2 > 0) lc(c1-1,c2-1)
+        if(c1+1<x && !state) lc(c1+1,c2)
+        if(c2+1<y && !state) lc(c1,c2+1)
+        if(c1 > 0 && !state) lc(c1-1,c2)
+        if(c2 > 0 && !state) lc(c1,c2-1)
+        if(c1+1<x && c2+1<y && !state) lc(c1+1,c2+1)
+        if(c1+1<x && c2 > 0 && !state) lc(c1+1,c2-1)
+        if(c1 > 0 && c2+1<y && !state) lc(c1-1,c2+1)
+        if(c1 > 0 && c2 > 0 && !state) lc(c1-1,c2-1)
     }
 }//Applies middle click (chord) to coordinates
 function rc(c1,c2){
+    if(state) return
     self = document.getElementById("x"+c1+"y"+c2); // Get Element
     if(self.className == "b1"||self.className == "b2") return // Can't flag blanks
     if(bombs === undefined || bombs.length == 0) return // Can't flag while pre-initialized
@@ -96,8 +131,9 @@ function createBoard(){
             }, false);
         }
     }
-    rsz();bombs=[];flags=[];started=0;
+    bombs=[],flags=[],started=0,state=0;
     document.getElementById("flags").innerHTML = bc-flags.reduce(function(a,b){return a+b},0);
+    rsz();
 }//Generates table of y rows and x columns in a div of id="minesweeper" or appended to body
 function initialize(a,b){
     b1 = [];
@@ -108,6 +144,7 @@ function initialize(a,b){
     console.log('Space Requirement: '+SpaceReq)
     while(b1.length < bc){
         var rand = Math.floor(Math.random()*x*y);
+        if(Math.abs(Math.floor(rand/y)-a)<=1 && Math.abs(rand%y<=1)) continue
         if(b1.indexOf(rand) === -1) b1.push(rand);
     }
     for(i=0;i<x*y;i++){
@@ -144,37 +181,47 @@ function flagcheck(a,b){
     return c; 
 }//Returns number of flags around coords (a,b)
 function lose(){
-    alert('L you lost lol')
     for(i in bombs){//view bombs
-        if(bombs[i] === true) document.getElementById("x"+Math.floor(i/y)+"y"+i%y).innerHTML = "<img class=\"mine\" valign=\"middle\" align=\"center\" src=\"assets/mine.png\"></img>";
+        if(bombs[i] && !flags[i]) document.getElementById("x"+Math.floor(i/y)+"y"+i%y).innerHTML = "<img class=\"mine\" valign=\"middle\" align=\"center\" src=\"assets/mine.png\"></img>";
+        if(flags[i] && !bombs[i]) document.getElementById("x"+Math.floor(i/y)+"y"+i%y).innerHTML = "<img class=\"mine\" valign=\"middle\" align=\"center\" src=\"assets/xflag.png\"></img>";
     }
-    createBoard()
+    state = 1
 }//Loss state function
 function win(){
-    alert('NO WAY YOU WON')
-    createBoard()
+    for(i in document.getElementsByClassName('one')){
+        elem = document.getElementsByClassName('one')[i]
+        if(elem.style===undefined) break;
+        elem.style.setProperty("background-color","#5ff0f0")
+    }
+    for(i in document.getElementsByClassName('two')){
+        elem = document.getElementsByClassName('two')[i]
+        if(elem.style===undefined) break;
+        elem.style.setProperty("background-color","#5fe5e5")
+    }
+    state = 2
+    setTimeout(function(){alert('NO WAY YOU WON');},50)
 }//Win state function
 setInterval(function(){
-    if (started) document.getElementById("timer").innerHTML = Math.floor((Date.now()-start)/1000)
+    if (state) return
+    if (started) document.getElementById("timer").innerHTML = ((Date.now()-start) < 999000 ? Math.floor((Date.now()-start)/1000) : 999)
     else document.getElementById("timer").innerHTML = 0
 },500)
 
 //Display Functions
 function rsz(){
-    height = $(window).height();
-    width = $(window).width();
-    cellsize = Math.floor(Math.min(Math.max(30,50*(8/Math.min(x,y))),0.7*width/x,0.75*height/y))
-    margin = (height-(.17*height+y*(cellsize+2)))/2-1
+    height = Math.max(480,$(window).height());//height tolerance
+    width2 = Math.max($(window).width());//width tolerance
+    cellsize = Math.round(Math.min(Math.max(32,Math.min(77*(8/Math.min(x,y)),52)),.65*(width2+250)/x,.9*(height-160)/y))-2
+    margin = (height-(100+Math.max(Math.floor(.07*height),30)+y*(cellsize+2)))/2-15
     varbs.style.setProperty('--cell',cellsize+'px')
     varbs.style.setProperty('--font',Math.round(cellsize * .7)+'px')
-    varbs.style.setProperty('--borders',border = Math.round(cellsize * .1)+'px')
+    varbs.style.setProperty('--borders',border = Math.floor(cellsize * .1)+'px')
     varbs.style.setProperty('--small',Math.round(cellsize * .8)+'px')
-    varbs.style.setProperty('--navh',Math.floor(.1*height)+'px')
-    varbs.style.setProperty('--footh',Math.floor(.07*height)+'px')
-    varbs.style.setProperty('--umargin',Math.ceil(margin)+'px')
-    varbs.style.setProperty('--dmargin',Math.floor(margin)+'px')
-    document.querySelector('.scoreboard').style.setProperty("margin-left",Math.max((width/2-500),25)+"px")
-    console.log("Page Resized: "+width+", "+height)
+    varbs.style.setProperty('--footh',Math.max(Math.floor(.07*height),30)+'px')
+    varbs.style.setProperty('--umargin',Math.max(Math.ceil(margin),10)+'px')
+    varbs.style.setProperty('--dmargin',Math.max(Math.floor(margin),10)+'px')
+    varbs.style.setProperty('--bmargin',Math.min(75,($(window).width()/2)-183)+'px')
+    console.log("Page Resized: "+width2+", "+height)
 }//Change CSS size variables based on page and table size
 
 //Admin Functions?
@@ -186,7 +233,7 @@ function easyChangeBoard(w,h,d) {
     y = h;
     bc = Math.ceil(w*h*d);
     createBoard();
-}
+}//Console command to change board size
 
 //Settings Functions
 function change(){
@@ -203,11 +250,70 @@ function change(){
     document.getElementById("hspan").innerHTML = iy
     document.getElementById("bspan").innerHTML = ib
     document.getElementById("dspan").innerHTML = Math.round(ib*100/(ix*iy))/100
-}
+    if (document.querySelector('input[name="difficulty"]:checked').id == "dcustom") apply2()
+}//Manage frontend size controls
+function savediff(){
+    if(!confirm('Overwrite saved settings?')) return
+    sx = parseInt(document.getElementById("width").value)
+    sy = parseInt(document.getElementById("height").value)
+    sb = parseInt(document.getElementById("mines").value)
+    document.getElementById("sx").innerHTML = sx
+    document.getElementById("sy").innerHTML = sy
+    document.getElementById("sb").innerHTML = sb
+}//Save custom values to difficulty
+function apply(){
+    if(bombs.length == 0 || state || confirm('Reset the game board with new settings?')) regenerate()
+}//Apply button
+function apply2(){
+    if(bombs.length == 0 || state) regenerate()
+}//Silent apply function
 function regenerate(){
-    if(!confirm("Reset the game board with new settings?")) return
-    x = parseInt(document.getElementById("width").value)
-    y = parseInt(document.getElementById("height").value)
-    bc = parseInt(document.getElementById("mines").value)
+    switch(document.querySelector('input[name="difficulty"]:checked').id){
+        case "dbeginner":
+            x = difficulties.beginner.x
+            y = difficulties.beginner.y
+            bc = difficulties.beginner.b
+        break
+        case "deasy":
+            x = difficulties.easy.x
+            y = difficulties.easy.y
+            bc = difficulties.easy.b
+        break
+        case "dmedium":
+            x = difficulties.medium.x
+            y = difficulties.medium.y
+            bc = difficulties.medium.b
+        break
+        case "dhard":
+            x = difficulties.hard.x
+            y = difficulties.hard.y
+            bc = difficulties.hard.b
+        break
+        case "dextreme":
+            x = difficulties.extreme.x
+            y = difficulties.extreme.y
+            bc = difficulties.extreme.b
+        break
+        case "dcustom":
+            x = parseInt(document.getElementById("width").value)
+            y = parseInt(document.getElementById("height").value)
+            bc = parseInt(document.getElementById("mines").value)
+        break
+        case "dsaved":
+            x = sx
+            y = sy
+            bc = sb
+        break
+    }
     createBoard()
-}
+}//Apply difficulty changes
+function forfeit(){
+    if(bombs[0]===undefined || state) return
+    if(!confirm("Forfeit and reveal bombs?")) return
+    lose()
+}//Reset button functionality
+function menu(id){
+    var elem = document.getElementById(id)
+    if(elem.style.display == "none"){elem.style.display = "flex";console.log('Opened '+id);return}
+    if(elem.style.display == "flex"){elem.style.display = "none";console.log('Closed '+id);return}
+}//Open a menu
