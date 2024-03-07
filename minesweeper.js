@@ -144,7 +144,7 @@ function initialize(a,b){
     console.log('Space Requirement: '+SpaceReq)
     while(b1.length < bc){
         var rand = Math.floor(Math.random()*x*y);
-        if(Math.abs(Math.floor(rand/y)-a)<=1 && Math.abs(rand%y<=1)) continue
+        if(Math.abs(Math.floor(rand/y)-a)<=1 && Math.abs(rand%y-b)<=1) continue
         if(b1.indexOf(rand) === -1) b1.push(rand);
     }
     for(i=0;i<x*y;i++){
